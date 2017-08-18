@@ -14,18 +14,34 @@ $ aws s3 cp ottawa.mbtiles s3://opentransportation.io/osm-qa-tiles/ottawa.mbtile
 ```
 SOURCE=ottawa
 
-# Zoom 12
+# Highways
 tippecanoe \
-    --output=$SOURCE-z12.mbtiles \
+    --output=$SOURCE-highways.mbtiles \
     --force \
-    --minimum-zoom 5 \
-    --maximum-zoom 12 \
-    --full-detail 20 \
+    --layer ottawa-highways \
+    --minimum-zoom 6 \
+    --maximum-zoom 11 \
+    --full-detail 21 \
     --drop-smallest-as-needed \
     --drop-densest-as-needed \
     --drop-fraction-as-needed \
     --simplify-only-low-zooms \
     $SOURCE.geojson
+
+# Roads
+tippecanoe \
+    --output=$SOURCE-roads.mbtiles \
+    --force \
+    --layer ottawa-roads \
+    --minimum-zoom 11 \
+    --maximum-zoom 14 \
+    --full-detail 18 \
+    --drop-smallest-as-needed \
+    --drop-densest-as-needed \
+    --drop-fraction-as-needed \
+    --simplify-only-low-zooms \
+    $SOURCE.geojson
+```
 
 ## References
 
