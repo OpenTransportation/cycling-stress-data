@@ -9,6 +9,24 @@ $ mobile-map-builder --bbox ottawa --url canada.mbtiles --min 12 --max 12 --name
 $ aws s3 cp ottawa.mbtiles s3://opentransportation.io/osm-qa-tiles/ottawa.mbtiles
 ```
 
+## Tippecanoe
+
+```
+SOURCE=ottawa
+
+# Zoom 12
+tippecanoe \
+    --output=$SOURCE-z12.mbtiles \
+    --force \
+    --minimum-zoom 5 \
+    --maximum-zoom 12 \
+    --full-detail 20 \
+    --drop-smallest-as-needed \
+    --drop-densest-as-needed \
+    --drop-fraction-as-needed \
+    --simplify-only-low-zooms \
+    $SOURCE.geojson
+
 ## References
 
 - https://www.ocf.berkeley.edu/~jlynn/bikemap/

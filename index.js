@@ -1,6 +1,8 @@
 const path = require('path')
 const mkdirp = require('mkdirp')
 const tileReduce = require('tile-reduce')
+const write = require('write-json-file')
+const {featureCollection} = require('@turf/helpers')
 const globalMercator = require('global-mercator')
 
 /**
@@ -33,13 +35,17 @@ module.exports = function (mbtiles, options) {
     }
   })
   const ee = tileReduce(options)
+  const highways = []
 
   // Execute the following after each tile is completed
   ee.on('reduce', (result, tile) => {
-    const quadkey = globalMercator.googleToQuadkey(tile)
-    console.log('processing quadkey', quadkey)
+    result.forEach(highway => highways.push(highway))
   })
   ee.on('end', () => {
+    write.sync(
+      path.join(output, path.parse(mbtiles).name + '.geojson'),
+      featureCollection(highways)
+    )
     console.log('done')
   })
   return ee

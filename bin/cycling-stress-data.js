@@ -1,8 +1,8 @@
-#!/usr/bin/env node
+#! /usr/bin/env node
 
 const fs = require('fs')
 const meow = require('meow')
-const {cyclingStressData} = require('../')
+const cyclingStressData = require('../')
 const cli = meow(`
   Usage:
     $ cycling-stress-data <qa-tiles>
